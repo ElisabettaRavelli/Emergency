@@ -10,6 +10,7 @@ public class Evento implements Comparable<Evento>{
 
 	/**
 	 * Tipologie di eventi che possono accadere 
+	 * Gli eventi cambiano lo stato del sistema 
 	 */
 	public enum TipoEvento {
 		ARRIVO, // un nuovo paziente arriva in Emergency
@@ -17,11 +18,13 @@ public class Evento implements Comparable<Evento>{
 		VISITA, // paziente viene visitato da medico
 		CURATO, // paziente esce da studio medico
 		TIMEOUT, // attesa troppo lunga
+		
+		POLLING, //evento periodico per verificare se ci sono studi liberi e pazienti in attesa
 	}
 	
-	private LocalTime ora ; // timestamp dell'evento
-	private TipoEvento tipo ; // tipologia
-	private Paziente paziente ; // chi è il paziente coinvolto nell'evento
+	private LocalTime ora ; // timestamp dell'evento (marcatore temporale)
+	private TipoEvento tipo ; // tipologia di evento 
+	private Paziente paziente ; // chi è il paziente coinvolto nell'evento (riferimento al paziente)
 	
 	public Evento(LocalTime ora, TipoEvento tipo, Paziente paziente) {
 		super();
@@ -43,6 +46,10 @@ public class Evento implements Comparable<Evento>{
 	@Override
 	public int compareTo(Evento other) {
 		return this.ora.compareTo(other.ora);
+	}
+	@Override
+	public String toString() {
+		return String.format("Evento [ora=%s, tipo=%s, paziente=%s]", ora, tipo, paziente);
 	}
 	
 }
